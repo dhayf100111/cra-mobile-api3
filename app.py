@@ -23,6 +23,11 @@ def create_app(config_class=Config):
     
     return app
 
+# This is the application instance that gunicorn will use
+application = create_app()
+# Also create 'app' variable for backward compatibility
+app = application
+
 if __name__ == '__main__':
-    app = create_app()
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    application.run(host='0.0.0.0', port=port, debug=False)
